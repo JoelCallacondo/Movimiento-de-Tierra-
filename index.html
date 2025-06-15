@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Minera Web</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #E7F6F2; }
+        .card { margin-bottom: 20px; border-radius: 10px; }
+        .card-header { background-color: #A5C9CA; font-weight: bold; }
+        .btn-calculate { background-color: #2C3333; color: white; }
+        .result-box { background-color: white; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Encabezado -->
+        <div class="text-center mb-4">
+            <h1 class="display-4">Planteamiento del problema</h1>
+            <p class="lead">Universidad Nacional Jorge Basadre Grohmann</p>
+            <p>Facultad de Ingeniería - Escuela Profesional de Ingeniería de Minas</p>
+            <p class="text-muted">Creador: JOEL FERNANDO CALLACONDO HUARACHI | 2022-101023</p>
+        </div>
+
+        <!-- Sección 1: Tonelaje a explotar -->
+        <div class="card">
+            <div class="card-header">N°01 - Tonelaje a explotar (Kg)</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Largo del banco (m):</label>
+                    <input type="number" class="form-control" id="largo_banco" step="0.01">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ancho del banco (m):</label>
+                    <input type="number" class="form-control" id="ancho_banco" step="0.01">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Densidad (T/m³):</label>
+                    <input type="number" class="form-control" id="densidad" step="0.01">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Altura del Banco (m):</label>
+                    <div class="result-box" id="altura_banco_result">-</div>
+                </div>
+                <button class="btn btn-calculate" onclick="calcular('RESPUESTA1')">Calcular N°01</button>
+                <div class="mt-3">
+                    <label class="form-label">Resultado:</label>
+                    <div class="result-box" id="resultado1">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 2: Densidad de carga de explosivo -->
+        <div class="card">
+            <div class="card-header">N°02 - Densidad de carga de explosivo</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Densidad del explosivo (gr/cc):</label>
+                    <input type="number" class="form-control" id="densidad_explosivo" step="0.01">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Diámetro del pozo (in):</label>
+                    <input type="number" class="form-control" id="diametro_pozo" step="0.01">
+                </div>
+                <button class="btn btn-calculate" onclick="calcular('RESPUESTA2')">Calcular N°02</button>
+                <div class="mt-3">
+                    <label class="form-label">Resultado:</label>
+                    <div class="result-box" id="resultado2">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 3: Cálculos varios -->
+        <div class="card">
+            <div class="card-header">N°03 - Cálculos varios</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Pasadura (m):</label>
+                    <input type="number" class="form-control" id="pasadura" step="0.01">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Taco (m):</label>
+                    <input type="number" class="form-control" id="taco" step="0.01">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Altura de Banco (m):</label>
+                    <input type="number" class="form-control" id="altura" step="0.01">
+                </div>
+                <button class="btn btn-calculate" onclick="calcular('RESPUESTA3')">Calcular N°03</button>
+                <div class="mt-3">
+                    <label class="form-label">Resultado:</label>
+                    <div class="result-box" id="resultado3">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 4: Consumo de explosivo -->
+        <div class="card">
+            <div class="card-header">N°04 - Consumo de explosivo (Kg)</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Tonelaje a explotar (kg/m):</label>
+                    <input type="number" class="form-control" id="tonelaje" step="0.01">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Altura de carga (m):</label>
+                    <input type="number" class="form-control" id="altura_carga" step="0.01">
+                </div>
+                <button class="btn btn-calculate" onclick="calcular('RESPUESTA4')">Calcular N°04</button>
+                <div class="mt-3">
+                    <label class="form-label">Resultado:</label>
+                    <div class="result-box" id="resultado4">-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function calcular(tipo) {
+            const datos = {
+                tipo: tipo,
+                largo_banco: document.getElementById("largo_banco")?.value,
+                ancho_banco: document.getElementById("ancho_banco")?.value,
+                densidad: document.getElementById("densidad")?.value,
+                densidad_explosivo: document.getElementById("densidad_explosivo")?.value,
+                diametro_pozo: document.getElementById("diametro_pozo")?.value,
+                altura: document.getElementById("altura")?.value,
+                pasadura: document.getElementById("pasadura")?.value,
+                taco: document.getElementById("taco")?.value,
+                tonelaje: document.getElementById("tonelaje")?.value,
+                altura_carga: document.getElementById("altura_carga")?.value
+            };
+
+            try {
+                const response = await fetch("/calcular", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(datos)
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    document.getElementById(`resultado${tipo.slice(-1)}`).innerText = "Error en datos";
+                } else {
+                    document.getElementById(`resultado${tipo.slice(-1)}`).innerText = data.resultado;
+                    if (tipo === "RESPUESTA1" && data.altura_banco) {
+                        document.getElementById("altura_banco_result").innerText = data.altura_banco;
+                    }
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+    </script>
+</body>
+</html>
